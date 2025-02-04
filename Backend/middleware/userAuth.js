@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET} from '../config/envConfig.js';
 
 const userAuth = async (req, res, next) => {
-    const token = req.cookies;
+    const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({ success: false, message: 'Access denied! Login Again' });
     }
