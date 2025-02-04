@@ -4,6 +4,7 @@ import cors from 'cors';
 import { PORT } from './config/envConfig.js';
 import connectDB from './config/db.js';
 import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoute.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/api/auth', authRouter);
+app.use('/api/user', userRouter);
 
 
 app.listen(PORT, () => {
