@@ -103,4 +103,33 @@ export const logout = async (req, res) => {
     }
 };
 
-export default { register, login, logout };
+// send verification otp
+export const sendVerificationOtp = async (req, res) =>{
+    try {
+        const {userId} = req.body;
+        
+        const user = await User.findById(userId);
+        if(user.isAccountVerified){
+            return res.status(400).json({ success: false, message: 'Account already verified' });
+        }
+
+        const otp = String(Math.floor(100000 + Math.random() * 900000));
+        user.verifyOtp = otp;
+        user.verifyOtpExpireAt = Date.now() + 24 * 60 * 60 * 1000;
+        await user.save();
+
+        // Send OTP to user email
+        const mailOptions = {
+            from: SENDER_EMAIL,
+            to: user.email,
+            subject: 'Account Verification OTP',
+            text: `Your account verification OTP is ${otp}. Veryfy your account using this OTP`
+        };
+
+        await transporter.sendMail(mailOptions);
+        return res.status(200).json({ success: true, message: 'Verification OTP sent on Email' });
+
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
