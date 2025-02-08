@@ -9,6 +9,10 @@ export const {
     NODE_ENV,
     SMTP_USER,
     SMTP_PASSWORD,
-    SENDER_EMAIL
+    SENDER_EMAIL,
+    GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET,
+    GOOGLE_REDIRECT_URI,
+    SESSION_SECRET
     
 } = process.env;
