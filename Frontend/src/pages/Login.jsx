@@ -1,14 +1,52 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaGoogle, FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo.jpg";
+import { AppContext } from "../context/AppContext.jsx";
+import axios from 'axios'
+import { toast } from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate();
+
+    const { backendUrl, setIsLoggedin, getUserData } = useContext(AppContext)
+
     const [isSignUp, setIsSignUp] = useState(true);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const onSubmitHandler = async (e) => {
+        try {
+            e.preventDefault();
+            axios.defaults.withCredentials = true;
+
+            if (isSignUp) {
+                const { data } = await axios.post(`${backendUrl}/api/auth/register`, { name, email, password });
+
+                if (data.success) {
+                    setIsLoggedin(true);
+                    getUserData();
+                    navigate('/');
+                } else {
+                    toast.error(data.message);
+                }
+            } else {
+                const { data } = await axios.post(`${backendUrl}/api/auth/login`, { email, password });
+
+                if (data.success) {
+                    setIsLoggedin(true);
+                    getUserData();
+                    navigate('/');
+                } else {
+                    toast.error(data.message);
+                }
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100 ">
@@ -30,7 +68,7 @@ const Login = () => {
                         {isSignUp ? "Sign up to get started" : "Welcome back! Log in"}
                     </p>
 
-                    <form>
+                    <form onSubmit={onSubmitHandler}>
                         {isSignUp && (
                             <div className="mb-4 relative">
                                 <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
