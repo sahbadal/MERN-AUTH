@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import { FaGoogle, FaUser, FaLock, FaEnvelope } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import logo from "../assets/logo.jpg";
 
 const Login = () => {
-
-    const navigate = useNavigate()
-
+    const navigate = useNavigate();
     const [isSignUp, setIsSignUp] = useState(true);
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     return (
-        <>
-            <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 to-blue-500 p-6">
+        <div className="min-h-screen flex flex-col bg-gray-100 ">
+            {/* Navbar */}
+            <div className="bg-transparent py-4 px-20 flex items-center">
+                <div onClick={() => navigate('/')} className="flex items-center space-x-2 cursor-pointer">
+                    <img src={logo} alt="Logo" className="h-14" />
+                    <h1 className="text-3xl font-bold text-blue-600">AUTH</h1>
+                </div>
+            </div>
+
+            {/* Login / Signup Form */}
+            <div className="flex flex-grow items-center justify-center p-6">
                 <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg max-w-sm w-full">
                     <h2 className="text-3xl font-semibold text-center">
                         {isSignUp ? "Create Account" : "Login"}
@@ -60,9 +67,9 @@ const Login = () => {
                         </div>
 
                         <div className="text-right text-sm mb-4">
-                            <a onClick={() => navigate('/reset-password')} href="" className="text-blue-400 hover:underline">
+                            <p onClick={() => navigate('/reset-password')} className="text-blue-400 hover:underline cursor-pointer">
                                 Forgot password?
-                            </a>
+                            </p>
                         </div>
 
                         <button className="w-full bg-blue-600 py-2 rounded-lg hover:bg-blue-700 transition">
@@ -81,7 +88,7 @@ const Login = () => {
                     </button>
 
                     <p className="text-center mt-4 text-sm">
-                        {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+                        {isSignUp ? "Already have an account?" : "Don't have an account?"} {" "}
                         <button
                             className="text-blue-400 hover:underline"
                             onClick={() => setIsSignUp(!isSignUp)}
@@ -91,7 +98,7 @@ const Login = () => {
                     </p>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
