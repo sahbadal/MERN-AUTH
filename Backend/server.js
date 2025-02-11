@@ -10,14 +10,10 @@ import userRouter from './routes/userRoute.js';
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://mern-auth-frontend-intg.onrender.com"
-];
 
 // Middlewares
 app.use(cors({
-  origin: allowedOrigins,
+  origin: 'https://mern-auth-frontend-intg.onrender.com',
   credentials: true
 }));
 app.use(cookieParser());
