@@ -1,16 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { FaGoogle, FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo.jpg";
 import { AppContext } from "../context/AppContext.jsx";
-import axios from 'axios'
+import axios from 'axios';
 import { toast } from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate();
-
-    const { backendUrl, setIsLoggedin, getUserData } = useContext(AppContext)
-
+    const { backendUrl, setIsLoggedin, getUserData } = useContext(AppContext);
     const [isSignUp, setIsSignUp] = useState(true);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -47,6 +45,10 @@ const Login = () => {
         }
     };
 
+    // Google OAuth Handler
+    const handleGoogleLogin = () => {
+        window.open(`${backendUrl}/api/auth/google`, "_self");
+    };
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100 ">
@@ -120,10 +122,6 @@ const Login = () => {
                         <span className="mx-3 text-gray-400">OR</span>
                         <hr className="w-full border-gray-700" />
                     </div>
-
-                    <button className="w-full mt-4 bg-red-500 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-red-600 transition">
-                        <FaGoogle /> Continue with Google
-                    </button>
 
                     <p className="text-center mt-4 text-sm">
                         {isSignUp ? "Already have an account?" : "Don't have an account?"} {" "}
