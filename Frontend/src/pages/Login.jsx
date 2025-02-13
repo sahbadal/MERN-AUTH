@@ -45,10 +45,14 @@ const Login = () => {
         }
     };
 
-    // Google OAuth Handler
-    const handleGoogleLogin = () => {
-        window.open(`${backendUrl}/api/auth/google`, "_self");
-    };
+    const handleGoogleAuth = () => {
+        axios.defaults.withCredentials = true;
+        try {
+            window.location.href = `${backendUrl}/api/auth/google/callback`
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100 ">
@@ -122,6 +126,13 @@ const Login = () => {
                         <span className="mx-3 text-gray-400">OR</span>
                         <hr className="w-full border-gray-700" />
                     </div>
+
+                    <button
+                        onClick={handleGoogleAuth}
+                        className="w-full mt-4 bg-red-500 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-red-600 transition"
+                    >
+                        <FaGoogle /> Continue with Google
+                    </button>
 
                     <p className="text-center mt-4 text-sm">
                         {isSignUp ? "Already have an account?" : "Don't have an account?"} {" "}

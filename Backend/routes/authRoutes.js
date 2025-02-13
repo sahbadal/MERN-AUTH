@@ -1,7 +1,7 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
-import { JWT_SECRET,TOKEN_EXPIRE } from '../config/envConfig.js';
-// import passport from 'passport';
+import axios from 'axios'
+import { CLIENT_URL } from '../config/envConfig.js';
+import passport from 'passport';
 import { login, register, logout, sendVerificationOtp, veriryEmail, isAuthenticated, resetPassword, sendResetOtp } from '../controllers/authController.js';
 import userAuth from '../middleware/userAuth.js';
 
@@ -16,31 +16,29 @@ router.get('/is-auth', userAuth, isAuthenticated);
 router.post('/send-reset-otp', sendResetOtp);
 router.post('/reset-password', resetPassword);
 
-// //  Google OAuth Route (Login Initiation)
-// router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get(
+  '/google/callback',
+  passport.authenticate('google',{
+    successRedirect: CLIENT_URL,
+    failureRedirect: `${CLIENT_URL}/login`,
+  })
+)
 
-// //  Google OAuth Callback Route (After Login)
-// router.get('/google/callback', 
-//     passport.authenticate('google', { failureRedirect: 'http://localhost:5173/login' ,scope: ['profile', 'email'] }),
-//     async (req, res) => {
-//       try {
-//         console.log("Google Callback - User:", req.user);
-//         const user = req.user;
-//         if (!user) {
-//           return res.redirect('http://localhost:5173/?error=UserNotFound');
-//         }
+router.get('/google',async (req,res) =>{
+  try {
+    const response = await axios.get("https://accounts.google.com/o/oauth2/v2/auth",{
+      params:req.query
+    })
 
-//         // Generate JWT Token
-//         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: TOKEN_EXPIRE });
+    console.log(response);
+    res.send(response)
+    
 
-//         // Redirect to frontend with token
-//         res.redirect(`http://localhost:5173/login?token=${token}`);
-        
-//       } catch (error) {
-//         console.error("Google Auth Callback Error:", error);
-//         res.redirect('http://localhost:5173/login?error=InternalServerError');
-//       }
-//     }
-// );
+  } catch (error) {
+    res.json({success: false, error:"Internal server Error"})
+  }
+
+})
+
 
 export default router;
