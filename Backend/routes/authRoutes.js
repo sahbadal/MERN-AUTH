@@ -16,29 +16,15 @@ router.get('/is-auth', userAuth, isAuthenticated);
 router.post('/send-reset-otp', sendResetOtp);
 router.post('/reset-password', resetPassword);
 
-router.get(
-  '/google/callback',
-  passport.authenticate('google',{
-    successRedirect: CLIENT_URL,
-    failureRedirect: `${CLIENT_URL}/login`,
-  })
-)
+// router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.get('/google',async (req,res) =>{
-  try {
-    const response = await axios.get("https://accounts.google.com/o/oauth2/v2/auth",{
-      params:req.query
-    })
+// router.get('/google/callback', 
+//   passport.authenticate('google', { failureRedirect: `${CLIENT_URL}/login` }), 
+//   (req, res) => {
+//       res.redirect(CLIENT_URL);
+//   }
+// );
 
-    console.log(response);
-    res.send(response)
-    
-
-  } catch (error) {
-    res.json({success: false, error:"Internal server Error"})
-  }
-
-})
 
 
 export default router;

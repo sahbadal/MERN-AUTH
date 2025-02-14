@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { FaGoogle, FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/logo.jpg";
 import { AppContext } from "../context/AppContext.jsx";
@@ -44,15 +44,6 @@ const Login = () => {
             toast.error(error.message);
         }
     };
-
-    const handleGoogleAuth = () => {
-        axios.defaults.withCredentials = true;
-        try {
-            window.location.href = `${backendUrl}/api/auth/google/callback`
-        } catch (error) {
-            toast.error(error.message)
-        }
-    }
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-100 ">
@@ -120,19 +111,6 @@ const Login = () => {
                             {isSignUp ? "Sign Up" : "Login"}
                         </button>
                     </form>
-
-                    <div className="mt-6 flex items-center justify-center">
-                        <hr className="w-full border-gray-700" />
-                        <span className="mx-3 text-gray-400">OR</span>
-                        <hr className="w-full border-gray-700" />
-                    </div>
-
-                    <button
-                        onClick={handleGoogleAuth}
-                        className="w-full mt-4 bg-red-500 py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-red-600 transition"
-                    >
-                        <FaGoogle /> Continue with Google
-                    </button>
 
                     <p className="text-center mt-4 text-sm">
                         {isSignUp ? "Already have an account?" : "Don't have an account?"} {" "}

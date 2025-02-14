@@ -5,7 +5,7 @@ import { PORT } from './config/envConfig.js';
 import connectDB from './config/db.js';
 import authRouter from './routes/authRoutes.js';
 import userRouter from './routes/userRoute.js';
-import configurePassport from './config/passport.js';
+// import configurePassport from './config/passport.js';
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-configurePassport(app);
+// configurePassport(app);
 // Connect to MongoDB
 connectDB();
 
