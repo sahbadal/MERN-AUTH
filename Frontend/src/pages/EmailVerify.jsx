@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/auth-logo.png";
 import { AppContext } from "../context/AppContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";

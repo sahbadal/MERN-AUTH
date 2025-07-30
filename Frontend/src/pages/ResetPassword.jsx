@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
 import { FaEnvelope, FaLock } from 'react-icons/fa'
-import logo from "../assets/logo.jpg";
+import logo from "../assets/auth-logo.png";
 import { AppContext } from "../context/AppContext.jsx";
 import axios from "axios";
 import { toast } from "react-toastify";
