@@ -5,6 +5,9 @@ It includes **email/password signup**, **OTP-based verification**, **Google logi
 
 ---
 
+## Live Link
+https://mern-auth-rust.vercel.app
+
 ## ✨ Features
 
 - ✅ User Signup with name, email, password
@@ -40,7 +43,7 @@ It includes **email/password signup**, **OTP-based verification**, **Google logi
 - ** Backend(render)**
 
   # 1. Clone the repository
-git clone https://github.com/sahbadal/MERN-AUTH.git
+git clone [https://github.com/sahbadal/MERN-AUTH.git](https://github.com/sahbadal/MERN-AUTH.git)
 cd MERN-AUTH
 
 # 2. Setup Backend
