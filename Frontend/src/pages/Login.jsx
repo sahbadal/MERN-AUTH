@@ -1,7 +1,9 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/auth-logo.png";
+import google from "../assets/google.png";
 import { AppContext } from "../context/AppContext.jsx";
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -13,6 +15,7 @@ const Login = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const onSubmitHandler = async (e) => {
         try {
@@ -95,10 +98,16 @@ const Login = () => {
                             <input
                                 onChange={e => setPassword(e.target.value)}
                                 value={password}
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="Password"
-                                className="w-full bg-gray-800 text-white pl-10 py-2 rounded focus:outline-none"
+                                className="w-full bg-gray-800 text-white pl-10 pr-10 py-2 rounded focus:outline-none"
                             />
+                            <span
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-400"
+                            >
+                                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </span>
                         </div>
 
                         <div className="text-right text-sm mb-4">
@@ -110,6 +119,19 @@ const Login = () => {
                         <button className="w-full bg-blue-600 py-2 rounded-lg hover:bg-blue-700 transition">
                             {isSignUp ? "Sign Up" : "Login"}
                         </button>
+                        <div className="text-center mt-4">
+                            <p className="text-gray-400 mb-2">or continue with</p>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    window.open(`${backendUrl}/api/auth/google`, "_self");
+                                }}
+                                className="flex items-center justify-center gap-2 w-full bg-white text-gray-800 font-semibold py-2 rounded-lg shadow hover:bg-gray-200 transition"
+                            >
+                                <img src={google} alt="Google" className="h-5 w-5" />
+                                Continue with Google
+                            </button>
+                        </div>
                     </form>
 
                     <p className="text-center mt-4 text-sm">
@@ -121,6 +143,8 @@ const Login = () => {
                             {isSignUp ? "Login here" : "Sign up here"}
                         </button>
                     </p>
+
+
                 </div>
             </div>
         </div>
