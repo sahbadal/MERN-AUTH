@@ -11,10 +11,7 @@ import "./config/passport.js";
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://mern-auth-rust.vercel.app",
-];
+const allowedOrigins = ["https://mern-auth-rust.vercel.app"];
 
 // Middlewares
 app.use(
