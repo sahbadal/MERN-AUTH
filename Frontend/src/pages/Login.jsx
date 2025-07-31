@@ -124,7 +124,7 @@ const Login = () => {
                             <button
                                 type="button"
                                 onClick={() => {
-                                    window.location.href = `${backendUrl}/api/auth/google`;
+                                    window.open(`${backendUrl}/api/auth/google`, "_self");
                                 }}
                                 className="flex items-center justify-center gap-2 w-full bg-white text-gray-800 font-semibold py-2 rounded-lg shadow hover:bg-gray-200 transition"
                             >
