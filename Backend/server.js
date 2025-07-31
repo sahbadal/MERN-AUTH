@@ -1,7 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { PORT, CLIENT_URL } from "./config/envConfig.js";
+import { PORT } from "./config/envConfig.js";
 import connectDB from "./config/db.js";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoute.js";
@@ -11,10 +11,15 @@ import "./config/passport.js";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://mern-auth-rust.vercel.app",
+];
+
 // Middlewares
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: allowedOrigins,
     credentials: true,
   })
 );
